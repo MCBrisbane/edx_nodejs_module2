@@ -54,11 +54,9 @@ app.get('/posts/:postId/comments', (req, res) => {
   comments.getComments(req, res) 
 })
 
-
 app.post('/posts/:postId/comments', (req, res) => {
   comments.addComment(req, res)
  })
-
 
 app.put('/posts/:postId/comments/:commentId', (req, res) => {
   comments.updateComment(req, res)
