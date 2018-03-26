@@ -1,0 +1,45 @@
+# Get data - display in JSON format
+curl http://localhost:3000/posts | json_pp
+
+# Add post data
+curl -H "Content-Type: application/json" -X POST -d '{"name": "New Posting", "url":"http://webapplog.com/es6", "text": "The text line...", "comments" :[{"com1" : "comment1"}]}'  "http://localhost:3000/posts" 
+
+# Update new post data - is ID 1
+curl -H 'Content-Type: application/json' -X PUT -d '{"name": "New Posting", "url":"http://webapplog.com/es6", "text": "UPDATED The text line...", "comments" :[{"com1" : "comment1"}]}'  "http://localhost:3000/posts/1"
+
+# Try to update a post which does not exist - is ID 19999 - handled correctly
+curl -H 'Content-Type: application/json' -X PUT -d '{"name": "New Posting", "url":"http://webapplog.com/es6", "text": "UPDATED The text line...", "comments" :[{"com1" : "comment1"}]}'  "http://localhost:3000/posts/19999"
+
+# Deletes post data at ID 1
+curl -X DELETE "http://localhost:3000/posts/1" 
+
+# Try to delete non-existent comments - handled correctly
+curl -X DELETE "http://localhost:3000/posts/1999" 
+
+
+# Try to view comment of invalid post - handled correctly
+curl http://localhost:3000/posts/111111/comments
+
+
+# Add comment data
+curl -H "Content-Type: application/json" -X POST -d '{"text":"New Comment 1"}' "http://localhost:3000/posts/0/comments" 
+
+# Update a comment
+curl -H "Content-Type: application/json" -X PUT -d '{"text": "UPDATED Comment 1"}' "http://localhost:3000/posts/0/comments/1" 
+
+# Add post and Update comment 
+curl -H "Content-Type: application/json" -X POST -d '{"name": "New Posting", "url":"http://webapplog.com/es6", "text": "The text line...", "comments" :[{"com1" : "comment1"}]}'  "http://localhost:3000/posts" 
+curl -H "Content-Type: application/json" -X PUT -d '{"text": "UPDATED Comment 2"}' "http://localhost:3000/posts/1/comments/0" 
+
+# Try to update non-existent comments - handled correcetly
+curl -H "Content-Type: application/json" -X PUT -d '{"text": "UPDATED Comment 4"}' "http://localhost:3000/posts/110/comments/2220"
+curl -H "Content-Type: application/json" -X PUT -d '{"text": "UPDATED Comment 4"}' "http://localhost:3000/posts/0/comments/2220"
+
+
+# Delete comment 0 of post 0 
+curl -H "Content-Type: application/json" -X DELETE "http://localhost:3000/posts/0/comments/0" 
+
+# Try to delete non-existent comments - handled correctly
+curl -H "Content-Type: application/json" -X DELETE "http://localhost:3000/posts/0/comments/1110" 
+
+
